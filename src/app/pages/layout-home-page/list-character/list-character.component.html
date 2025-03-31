@@ -1,32 +1,35 @@
-
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h3>List Characters</h3>
-        </div>
-        <div class="card-body">
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let character of characters">
-                <td>{{ character.id }}</td>
-                <td>{{ character.name }}</td>
-                <td>
-                  <button (click)="editCharacter(character.id)" class="btn btn-primary">Edit</button>
-                  <button (click)="editCharacter(character.id)" class="btn btn-danger">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <div class="card shadow-lg">
+          <div class="card-header text-center bg-primary text-white">
+            <h3>List Characters</h3>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <input 
+                class="form-control"
+                type="text"
+                placeholder="Busca tu personaje favorito aquí..."
+                (input)="searchCharacter($event)"
+              >
+            </div>
+            <div class="row">
+              <div *ngFor="let character of characters" class="col-md-4 col-lg-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">{{ character.name }}</h5>
+                    <img [src]="imageUrl + character.id + '.jpeg'" [alt]= "character.name"  class="card-img-top" style="width: 100%; height: auto;">
+                    <p class="card-text text-muted">ID: {{ character.id }}</p>
+                    <button (click)="editCharacter(character.id)" class="btn btn-primary btn-sm me-2">Edit</button>
+                    <button (click)="editCharacter(character.id)" class="btn btn-danger btn-sm">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
         </div>
       </div>
     </div>
   </div>
+  

@@ -13,17 +13,28 @@ import { CommonModule } from '@angular/common';
   styleUrl: './list-character.component.css'
 })
 export class ListCharacterComponent implements OnInit {
-
 public characters: Character[] = []; 
-  
+public imageUrl:string='https://rickandmortyapi.com/api/character/avatar/';
+
 constructor(
   private readonly apiService: ApiService
 ){}
-  ngOnInit(): void {
+
+ngOnInit(): void {
     this.getCharacters();
   }
+
+
 editCharacter(arg0: any) {
 throw new Error('Method not implemented.');
+}
+
+searchCharacter(event:any) {
+  const searchTerm=event.target.value.toLowerCase();
+  this.characters=this.characters.filter((character:Character) => {
+    return character.name.toLowerCase().includes(searchTerm) || character.species.toLowerCase().includes(searchTerm) || character.status.toLowerCase().includes(searchTerm);
+  }
+  );
 }
 
 getCharacters() {
