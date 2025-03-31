@@ -21,7 +21,7 @@
                     <h5 class="card-title">{{ character.name }}</h5>
                     <img [src]="imageUrl + character.id + '.jpeg'" [alt]= "character.name"  class="card-img-top" style="width: 100%; height: auto;">
                     <p class="card-text text-muted">ID: {{ character.id }}</p>
-                    <button (click)="editCharacter(character.id)" class="btn btn-primary btn-sm me-2">Edit</button>
+                    <button (click)="viewCharacter(character.id)" class="btn btn-primary btn-sm me-2">Más</button>
                     <button (click)="editCharacter(character.id)" class="btn btn-danger btn-sm">Delete</button>
                   </div>
                 </div>

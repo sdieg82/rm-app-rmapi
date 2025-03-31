@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Character } from './interfaces/Character-interface';
+import { Character } from '../interfaces/Character-interface';
 import { catchError, map, Observable, retry, shareReplay, throwError } from 'rxjs';
 
 @Injectable({
@@ -22,7 +22,16 @@ export class ApiService {
     // private actions$: Actions    
   ) { }
 
-
+  getCharacter(id: number): Observable<Character> {
+    return this.http.get<Character>(`${this.api}/${id}`)
+      .pipe(
+        retry(2),
+        map(response => {
+          console.log('Datos recibidos:', response);
+          return response;
+        })
+      );
+  }     
 
   getCharacters(forceRefresh: boolean = false): Observable<Character> {
     if (!this.cache$ || forceRefresh) {

@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
-import { Character } from '../../interfaces/Character-interface';
+import { Character } from '../../../interfaces/Character-interface';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-list-character',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
   templateUrl: './list-character.component.html',
   styleUrl: './list-character.component.css'
 })
@@ -15,7 +19,10 @@ export class ListCharacterComponent implements OnInit {
   public charactersCopy: Character[] = []; // Copia del array original
   public imageUrl: string = 'https://rickandmortyapi.com/api/character/avatar/';
 
-  constructor(private readonly apiService: ApiService) {}
+  constructor(
+    private  readonly router:Router,
+    private readonly apiService: ApiService,
+  ){}
 
   ngOnInit(): void {
     this.getCharacters();  // Llamamos a la API en cuanto se carga el componente
@@ -23,6 +30,13 @@ export class ListCharacterComponent implements OnInit {
 
   editCharacter(id: number) {
     console.log('Editar personaje con ID:', id);
+  }
+  viewCharacter(id:number){
+    console.log('Ver personaje con ID:', id);
+    // Aquí podrías navegar a una página de detalles del personaje, por ejemplo:
+    this.router.navigate(['/character', id]);
+    this.router.navigate(['/character', id], { queryParams: { id } });
+
   }
 
   deleteCharacter(id: number) {
