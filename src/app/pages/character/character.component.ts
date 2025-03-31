@@ -2,15 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Character } from '../../interfaces/Character-interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-character',
   standalone: true,
-  imports: [],
+  imports: [
+    NgClass
+  ],
   templateUrl: './character.component.html',
   styleUrl: './character.component.css'
 })
 export class CharacterComponent implements OnInit {
+  public myCharacter: Character | undefined; // Personaje mostrado en pantalla
+  public imageUrl: string = 'https://rickandmortyapi.com/api/character/avatar/';
+
   constructor(
     private readonly apiService:ApiService,
     private route: ActivatedRoute,
@@ -29,10 +35,10 @@ export class CharacterComponent implements OnInit {
   }
 
   getCharacter(id:number){
-    this.apiService.getCharacter(id);
-    this.apiService.getCharacter(id).subscribe((character:Character)=>{
+    this.apiService.getCharacter(id).subscribe((character: Character) => {
       console.log('Personaje:', character);
-    }
-  )}
+      this.myCharacter = character;
+    });
+  }
 
 }

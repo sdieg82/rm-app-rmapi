@@ -1,1 +1,41 @@
-<p>character works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <!-- Sección del personaje -->
+        <div class="col-md-5">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body text-center">
+                    <h2 class="text-primary fw-bold">Personaje</h2>
+                    <hr class="border-primary">
+                    <img [src]="imageUrl + myCharacter!.id + '.jpeg'" [alt]= myCharacter!.name  class="card-img-top" style="width: 100%; height: auto;">
+                    <h3 class="text-dark mt-3">{{ myCharacter?.name }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de información -->
+        <div class="col-md-5">
+            <div class="card shadow-lg border-0 rounded-4 p-4">
+                <h2 class="text-center text-success fw-bold">Información</h2>
+                <hr class="border-success">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Género:</strong> {{ myCharacter?.gender }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Especie:</strong> {{ myCharacter?.species }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Estado:</strong> 
+                        <span [ngClass]="{
+                            'text-success fw-bold': myCharacter?.status === 'Alive',
+                            'text-danger fw-bold': myCharacter?.status === 'Dead',
+                            'text-secondary fw-bold': myCharacter?.status === 'unknown'
+                        }">
+                            {{ myCharacter?.status }}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -34,7 +34,6 @@ export class ListCharacterComponent implements OnInit {
   viewCharacter(id:number){
     console.log('Ver personaje con ID:', id);
     // Aquí podrías navegar a una página de detalles del personaje, por ejemplo:
-    this.router.navigate(['/character', id]);
     this.router.navigate(['/character', id], { queryParams: { id } });
 
   }
