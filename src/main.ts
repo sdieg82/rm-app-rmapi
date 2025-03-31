@@ -7,8 +7,8 @@ import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent,{
   providers:[
-    provideHttpClient(),
-    provideRouter(routes, withComponentInputBinding()), 
+    provideHttpClient(),//Para peticiones http en los servicioa
+    provideRouter(routes, withComponentInputBinding()), //Para enlazar los componentes con las rutas
   ]
 } )
   
