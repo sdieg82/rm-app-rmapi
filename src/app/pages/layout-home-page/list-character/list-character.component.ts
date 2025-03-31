@@ -6,42 +6,48 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-list-character',
   standalone: true,
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   templateUrl: './list-character.component.html',
   styleUrl: './list-character.component.css'
 })
 export class ListCharacterComponent implements OnInit {
-public characters: Character[] = []; 
-public imageUrl:string='https://rickandmortyapi.com/api/character/avatar/';
+  public characters: Character[] = [];  // Personajes mostrados en pantalla
+  public charactersCopy: Character[] = []; // Copia del array original
+  public imageUrl: string = 'https://rickandmortyapi.com/api/character/avatar/';
 
-constructor(
-  private readonly apiService: ApiService
-){}
+  constructor(private readonly apiService: ApiService) {}
 
-ngOnInit(): void {
-    this.getCharacters();
+  ngOnInit(): void {
+    this.getCharacters();  // Llamamos a la API en cuanto se carga el componente
   }
 
-
-editCharacter(arg0: any) {
-throw new Error('Method not implemented.');
-}
-
-searchCharacter(event:any) {
-  const searchTerm=event.target.value.toLowerCase();
-  this.characters=this.characters.filter((character:Character) => {
-    return character.name.toLowerCase().includes(searchTerm) || character.species.toLowerCase().includes(searchTerm) || character.status.toLowerCase().includes(searchTerm);
+  editCharacter(id: number) {
+    console.log('Editar personaje con ID:', id);
   }
-  );
-}
 
-getCharacters() {
-  this.apiService.getCharacters().subscribe((response: any) => {
-    this.characters = response.results;
-    console.log(this.characters);
-  });
-}
+  deleteCharacter(id: number) {
+    console.log('Eliminar personaje con ID:', id);
+  }
 
+  searchCharacter(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    
+    if (!searchTerm.trim()) {
+      this.characters = [...this.charactersCopy]; // Restaurar la lista completa si el input está vacío
+      return;
+    }
+
+    this.characters = this.charactersCopy.filter((character: Character) =>
+      character.name.toLowerCase().includes(searchTerm) ||
+      character.species.toLowerCase().includes(searchTerm) ||
+      character.status.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  getCharacters() {
+    this.apiService.getCharacters().subscribe((response: any) => {
+      this.characters = response.results;
+      this.charactersCopy = [...this.characters]; // Clonamos el array después de recibir la respuesta
+    });
+  }
 }
