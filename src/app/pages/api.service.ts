@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,9 +7,17 @@ import { Injectable } from '@angular/core';
 export class ApiService {
 
   public api='https://rickandmortyapi.com/api/character'
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    // private router: Router,
+    // private authService: AuthService,
+    // private configService: ConfigService,
+    // private store: Store<AppState>,
+    // private actions$: Actions    
+  ) { }
 
-  getApi(){
-    return this.api
+  getCharacters(){
+    const characters = this.http.get(this.api);
+    return characters;
   }
 }
