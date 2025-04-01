@@ -32,7 +32,7 @@ export class CharacterComponent implements OnInit {
   ngOnInit(): void {
    
   }
-
+//cambios xd para probar la contribucion en mi github
   getCharacter(id:number){
     this.apiService.getCharacter(id).subscribe((character: Character) => {
       console.log('Personaje:', character);
