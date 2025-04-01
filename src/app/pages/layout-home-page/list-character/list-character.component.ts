@@ -77,6 +77,7 @@ export class ListCharacterComponent implements OnInit, OnDestroy {
       character.status.toLowerCase().includes(searchTerm)
     );
   }
+  //funcion para paginación
 
   getCharacters(page: number) {
     this.apiService.getCharacters(page).subscribe((response: any) => {
