@@ -16,7 +16,6 @@ import { NgClass } from '@angular/common';
 export class CharacterComponent implements OnInit {
   public myCharacter: Character | undefined; // Personaje mostrado en pantalla
   public imageUrl: string = 'https://rickandmortyapi.com/api/character/avatar/';
-
   constructor(
     private readonly apiService:ApiService,
     private route: ActivatedRoute,

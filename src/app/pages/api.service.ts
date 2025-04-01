@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Character } from '../interfaces/Character-interface';
 import { catchError, map, Observable, retry, shareReplay, throwError } from 'rxjs';
@@ -32,17 +32,19 @@ export class ApiService {
         })
       );
   }     
+  
+  getCharacters(page: number = 1, forceRefresh: boolean = false): Observable<Character> {
+    const params = new HttpParams().set('page', page.toString()); // Agrega ?page=N como query param
 
-  getCharacters(forceRefresh: boolean = false): Observable<Character> {
     if (!this.cache$ || forceRefresh) {
-      this.cache$ = this.http.get<Character>(this.api).pipe(
-        retry(2), // Intenta la petición hasta 2 veces en caso de error temporal
+      this.cache$ = this.http.get<Character>(this.api, { params }).pipe(
+        retry(2),
         map(response => {
-          console.log('Datos recibidos:', response);
+          console.log(`Datos de la página ${page}:`, response);
           return response;
         }),
-        catchError(this.handleError), // Manejo de errores centralizado
-        shareReplay(1) // Mantiene la última respuesta en caché
+        catchError(this.handleError),
+        shareReplay(1)
       );
     }
     return this.cache$;
