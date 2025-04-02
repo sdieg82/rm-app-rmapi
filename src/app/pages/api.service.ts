@@ -33,35 +33,30 @@ export class ApiService {
       );
   }     
   
-  getCharacters(page: number = 1, forceRefresh: boolean = false): Observable<Character> {
-    const params = new HttpParams().set('page', page.toString()); // Agrega ?page=N como query param
-
-    if (!this.cache$ || forceRefresh) {
-      this.cache$ = this.http.get<Character>(this.api, { params }).pipe(
-        retry(2),
+    // --- MÉTODO CORREGIDO ---
+    getCharacters(page: number = 1): Observable<Character> { // Devuelve la interfaz completa
+      const params = new HttpParams().set('page', page.toString());
+  
+      // Eliminamos la lógica de caché simple que causaba el problema
+      return this.http.get<Character>(this.api, { params }).pipe(
+        retry(2), // Reintentar si falla
         map(response => {
-          console.log(`Datos de la página ${page}:`, response);
-          return response;
+          console.log(`Datos de la página ${page} recibidos:`, response);
+          return response; // Devuelve toda la respuesta { info, results }
         }),
-        catchError(this.handleError),
-        shareReplay(1)
+        catchError(this.handleError) // Manejo de errores
       );
     }
-    return this.cache$;
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'Error desconocido';
-    if (error.error instanceof ErrorEvent) {
-      // Error del cliente (navegador)
-      errorMessage = `Error del cliente: ${error.error.message}`;
-    } else {
-      // Error del servidor
-      errorMessage = `Error del servidor (Código ${error.status}): ${error.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(() => new Error(errorMessage)); // Lanza el error para que el componente lo maneje
-  }
   
+    private handleError(error: HttpErrorResponse): Observable<never> {
+      let errorMessage = 'Error desconocido';
+      if (error.error instanceof ErrorEvent) {
+        errorMessage = `Error del cliente: ${error.error.message}`;
+      } else {
+        errorMessage = `Error del servidor (Código ${error.status}): ${error.message}`;
+      }
+      console.error(errorMessage);
+      return throwError(() => new Error(errorMessage));
+    }
 
 }
