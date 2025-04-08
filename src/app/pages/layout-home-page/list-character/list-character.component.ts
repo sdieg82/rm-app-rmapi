@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NavBarComponent } from "../shared/nav-bar/nav-bar.component";
 import { Subscription } from 'rxjs';
+import { PaginationComponent } from "../shared/pagination/pagination.component";
 
 @Component({
   selector: 'app-list-character',
@@ -12,7 +13,8 @@ import { Subscription } from 'rxjs';
   imports: [
     CommonModule,
     RouterModule,
-    NavBarComponent
+    NavBarComponent,
+    PaginationComponent
 ],
   templateUrl: './list-character.component.html',
   styleUrl: './list-character.component.css'
