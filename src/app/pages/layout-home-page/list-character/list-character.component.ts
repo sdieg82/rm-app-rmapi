@@ -35,6 +35,7 @@ export class ListCharacterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Suscribirse a los cambios en los query params
+    this.getCharacters(this.page);
     this.activateRoute.queryParams.subscribe(params => {
       const newPage = Number(params['page']) || 1;
       
