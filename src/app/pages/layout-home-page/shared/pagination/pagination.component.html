@@ -4,13 +4,13 @@
         <button (click)="previousPage()" class="page-link">Anterior</button>
       </li>
       <li class="page-item" [class.active]="page === this.page-1">
-        <a class="page-link" (click)="goToPage(1)">{{this.page-1}}</a>
+        <a class="page-link" (click)="goToPage(this.page-1)">{{this.page-1}}</a>
       </li>
       <li class="page-item" [class.active]="page === this.page">
-        <a class="page-link" (click)="goToPage(2)">{{this.page}}</a>
+        <a class="page-link" (click)="goToPage(this.page)">{{this.page}}</a>
       </li>
       <li class="page-item" [class.active]="page === this.page+1">
-        <a class="page-link" (click)="goToPage(3)">{{this.page+1}}</a>
+        <a class="page-link" (click)="goToPage(this.page+1)">{{this.page+1}}</a>
       </li>
       <li class="page-item">
         <button (click)="nextPage()" class="page-link">Siguiente</button>
